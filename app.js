@@ -3,23 +3,20 @@ const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const cors = require('cors');
-const db = require('./banco');  
-const createTable = require('./createTable');  
-
+const db = require('./banco');
+const createTable = require('./createTable');
 
 const app = express();
 app.use(bodyParser.json());
 app.use(cors());
 
-const SENHA_TOKEN = '186579'; 
+const SENHA_TOKEN = '186579';
 
 createTable();
-
 
 app.get('/test', (req, res) => {
     res.send('Rota de teste funcionando!');
 });
-
 
 function verifyToken(req, res, next) {
     const token = req.headers['authorization'];
@@ -32,6 +29,21 @@ function verifyToken(req, res, next) {
     });
 }
 
+app.post('/materias', verifyToken, (req, res) => {
+    const { name, description, color } = req.body;
+
+    if (!name) {
+        return res.status(400).send('O nome da matéria é obrigatório');
+    }
+
+    const sql = `INSERT INTO SchollSubject (name, description, color, user_id) VALUES (?, ?, ?, ?)`;
+
+    db.query(sql, [name, description, color, req.userId], (err, result) => {
+        if (err) return res.status(500).send('Erro ao cadastrar a matéria');
+        res.status(201).send('Matéria criada com sucesso');
+    });
+});
+
 app.post('/users', (req, res) => {
     const { name, phone, email, password } = req.body;
 
@@ -43,7 +55,6 @@ app.post('/users', (req, res) => {
         res.status(201).send('Usuário criado com sucesso');
     });
 });
-
 
 app.post('/login', (req, res) => {
     const { email, password } = req.body;
@@ -67,6 +78,16 @@ app.post('/login', (req, res) => {
     });
 });
 
+app.put('/users/:id', (req, res) => {
+    const { name, phone, email, password } = req.body;
+    const id = req.params.id;
+
+    const sql = `UPDATE users SET name = ?, phone = ?, email = ?, password = ? WHERE id = ?`;
+    db.query(sql, [name, phone, email, password, id], (err, result) => {
+        if (err) return res.status(500).send('Erro ao atualizar usuário');
+        res.status(200).send('Usuário atualizado com sucesso');
+    });
+});
 
 app.listen(5589, () => {
     console.log('Servidor rodando ');
