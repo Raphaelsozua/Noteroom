@@ -1,33 +1,40 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
-const jwt = require('jsonwebtoken');
+
 const cors = require('cors');
 const db = require('./banco');
 const createTable = require('./createTable');
-
+const createTableSubject = require('./createSchoolSubject');
+const verifyToken = require("./middleware/verifyToken");
+const cookieParser = require('cookie-parser');
 const app = express();
-app.use(bodyParser.json());
-app.use(cors());
 
-const SENHA_TOKEN = '186579';
+
+app.use(cookieParser());
+
+app.use(bodyParser.json());
+// app.use(cors());
+app.use(cors({
+    origin: 'http://localhost:5589', // ajuste isso conforme necessário
+    credentials: true
+}));
 
 createTable();
+createTableSubject();
+
+
 
 app.get('/test', (req, res) => {
-    res.send('Rota de teste funcionando!');
+    const nomeCookie = req.cookies['cookieteste'];
+    console.log(nomeCookie);
+    
+    if (nomeCookie) {
+        res.send(`Valor do cookie 'Cookie_2': ${nomeCookie}`);
+    } else {
+        res.send('Cookie "Cookie_2" não encontrado.');
+    }
 });
-
-function verifyToken(req, res, next) {
-    const token = req.headers['authorization'];
-    if (!token) return res.status(403).send('Token necessário');
-
-    jwt.verify(token, SENHA_TOKEN, (err, decoded) => {
-        if (err) return res.status(500).send('Não foi possível obter o token');
-        req.userId = decoded.id;
-        next();
-    });
-}
 
 app.post('/materias', verifyToken, (req, res) => {
     const { name, description, color } = req.body;

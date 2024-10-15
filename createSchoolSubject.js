@@ -1,7 +1,7 @@
 const connection = require('./banco');
 
 const createSchoolSubjectTable = `
-CREATE TABLE SchollSubject (
+CREATE TABLE IF NOT EXISTS SchollSubject (
     id INT AUTO_INCREMENT PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
     description VARCHAR(255),
@@ -14,7 +14,7 @@ CREATE TABLE SchollSubject (
 `;
 
 
-function createTable() {
+function createTablesubject() {
   connection.query(createSchoolSubjectTable, (err, results) => {
     if (err) {
       console.error('Erro ao criar a tabela "SchollSubject":', err);
@@ -25,4 +25,4 @@ function createTable() {
 }
 
 
-module.exports = createTable;
+module.exports = createTablesubject;
