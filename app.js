@@ -29,7 +29,7 @@ function verifyToken(req, res, next) {
     });
 }
 
-app.post('/materias', verifyToken, (req, res) => {
+app.post('/subjects', verifyToken, (req, res) => {
     const { name, description, color } = req.body;
 
     if (!name) {
