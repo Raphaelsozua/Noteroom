@@ -1,4 +1,4 @@
-const connection = require('./connection/connection');
+const connection = require('./connection/mysql_connection');
 
 const createSchoolSubjectTable = `
 CREATE TABLE IF NOT EXISTS SchollSubject (

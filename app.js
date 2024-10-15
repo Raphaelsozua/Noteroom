@@ -1,13 +1,15 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
+const cookieParser = require('cookie-parser');
 
 const cors = require('cors');
-const db = require('./banco');
-const createTable = require('./createTable');
-const createTableSubject = require('./createSchoolSubject');
+const db = require('./database/connection/mysql_connection');
+
+const createTable = require('./database/createTable');
+const createTableSubject = require('./database/createSchoolSubject');
 const verifyToken = require("./middleware/verifyToken");
-const cookieParser = require('cookie-parser');
+
 const app = express();
 
 
@@ -35,6 +37,7 @@ app.get('/test', (req, res) => {
         res.send('Cookie "Cookie_2" não encontrado.');
     }
 });
+
 
 app.post('/subjects', verifyToken, (req, res) => {
     const { name, description, color } = req.body;
