@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
 
 const SENHA_TOKEN = '186579';
+
 function verifyToken(req, res, next) {
     const token = req.headers['authorization'];
     if (!token) return res.status(403).send('Token necessário');
