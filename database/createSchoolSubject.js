@@ -1,4 +1,4 @@
-const connection = require('./banco');
+const connection = require('./connection/connection');
 
 const createSchoolSubjectTable = `
 CREATE TABLE IF NOT EXISTS SchollSubject (

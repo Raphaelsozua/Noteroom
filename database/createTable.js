@@ -1,5 +1,5 @@
 
-const connection = require('./banco');
+const connection = require('./connection/connection');
 
 const createUsersTable = `
   CREATE TABLE IF NOT EXISTS users (
