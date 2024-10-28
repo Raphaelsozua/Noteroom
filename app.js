@@ -1,6 +1,7 @@
 const express = require('express');
 const bodyParser = require('body-parser');
 const bcrypt = require('bcryptjs');
+const jwt = require('jsonwebtoken');
 const cookieParser = require('cookie-parser');
 
 const cors = require('cors');
@@ -16,14 +17,21 @@ const app = express();
 app.use(cookieParser());
 
 app.use(bodyParser.json());
-// app.use(cors());
 app.use(cors({
     origin: 'http://localhost:5589', // ajuste isso conforme necessário
     credentials: true
 }));
 
+
 createTable();
 createTableSubject();
+const SENHA_TOKEN = '186579'; // Necessário para o login, deixar organizado de forma modular posteriormente
+
+
+app.get('/test', (req, res) => {
+    res.send("Deu bom")
+});
+
 
 app.post('/subjects', verifyToken, (req, res) => {
     const { name, description, color } = req.body;
