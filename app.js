@@ -25,20 +25,6 @@ app.use(cors({
 createTable();
 createTableSubject();
 
-
-
-app.get('/test', (req, res) => {
-    const nomeCookie = req.cookies['cookieteste'];
-    console.log(nomeCookie);
-    
-    if (nomeCookie) {
-        res.send(`Valor do cookie 'Cookie_2': ${nomeCookie}`);
-    } else {
-        res.send('Cookie "Cookie_2" não encontrado.');
-    }
-});
-
-
 app.post('/subjects', verifyToken, (req, res) => {
     const { name, description, color } = req.body;
 
