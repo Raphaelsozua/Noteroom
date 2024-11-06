@@ -1,6 +1,7 @@
 const UserService = require('../services/userService');
 const SubjectService = require('../services/subjectService');
 const AuthService = require('../services/authService');
+const NotebookService = require('../services/notebookService'); // Importação do NotebookService
 
 class ApiFacade {
     async registerUser(data) {
@@ -16,6 +17,10 @@ class ApiFacade {
     async createSubject(data, userId) {
         const { name, description, color } = data;
         return await SubjectService.createSubject(name, description, color, userId);
+    }
+
+    async createNotebook(name, content, subjectId) {
+        return await NotebookService.createNotebooks(name, content, subjectId);
     }
 }
 
