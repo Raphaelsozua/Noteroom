@@ -62,6 +62,18 @@ app.post('/notebooks', verifyToken, async (req, res) => {
     }
 });
 
+app.get('/getSubjects', verifyToken, async (req, res) => {
+    try {
+        const userId = req.userId; // `user_id` do usuário logado
+        const result = await ApiFacade.getSubjectsByUserId(userId);
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        
+        res.status(500).json(error);
+    }
+});
+
 // Inicia o servidor
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');

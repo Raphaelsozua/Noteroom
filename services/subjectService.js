@@ -16,6 +16,7 @@ class SubjectService {
 
     async getSubjects(userID) {
         const sql = `SELECT * FROM SchollSubject WHERE user_id = ?`;
+        
         return new Promise((resolve, reject) => {
             db.query(sql, [userID], (err, result) => {
                 if (err) return reject({ status: 200, detail: 'Erro ao buscar matérias' });

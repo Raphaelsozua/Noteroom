@@ -22,6 +22,10 @@ class ApiFacade {
     async createNotebook(name, content, subjectId) {
         return await NotebookService.createNotebooks(name, content, subjectId);
     }
+
+    async getSubjectsByUserId(userId) {
+        return await SubjectService.getSubjects(userId);
+    }
 }
 
 module.exports = new ApiFacade();
