@@ -3,12 +3,20 @@ const bodyParser = require('body-parser');
 const cookieParser = require('cookie-parser');
 const cors = require('cors');
 const verifyToken = require('./middleware/verifyToken');
-const ApiFacade = require('./facades/ApiFacade');
-
+const ApiFacade = require('./facades/apiFacades.js');
+const createTableSubject = require('./database/createNotebook');
+const createTableSchoolSubject = require('./database/createSchoolSubject');
+const createTableSubjectUsers = require('./database/createUser');
 const app = express();
 
 app.use(cookieParser());
 app.use(bodyParser.json());
+
+// Chame diretamente as funções exportadas
+createTableSubjectUsers();
+createTableSchoolSubject();
+createTableSubject();
+
 app.use(cors({ origin: 'http://localhost:5589', credentials: true }));
 
 // Rota para registro de usuários
@@ -17,6 +25,8 @@ app.post('/users', async (req, res) => {
         const result = await ApiFacade.registerUser(req.body);
         res.status(201).send(result);
     } catch (error) {
+        console.log(error);
+
         res.status(500).send(error.message);
     }
 });
@@ -53,6 +63,6 @@ app.post('/notebooks', verifyToken, async (req, res) => {
 });
 
 // Inicia o servidor
-app.listen(5589, () => {
-    console.log('Servidor rodando na porta 5589');
+app.listen(3000, () => {
+    console.log('Servidor rodando na porta 3000');
 });

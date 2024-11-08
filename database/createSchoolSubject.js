@@ -1,4 +1,4 @@
-const db = require('./connection/mysql_connection');
+const db = require('./connection/singletonConnection');
 
 function createTableSubject() {
 	const sql = `CREATE TABLE IF NOT EXISTS SchollSubject (

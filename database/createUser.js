@@ -1,4 +1,4 @@
-const db = require('./connection/mysql_connection');
+const db = require('./connection/singletonConnection');
 
 function createUsersTable() {
 	const sql = `CREATE TABLE IF NOT EXISTS users (
