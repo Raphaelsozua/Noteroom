@@ -26,6 +26,10 @@ class ApiFacade {
     async getSubjectsByUserId(userId) {
         return await SubjectService.getSubjects(userId);
     }
+
+    async getNotebooks(subjectId) {
+        return await NotebookService.getNotebooks(subjectId);
+    }
 }
 
 module.exports = new ApiFacade();

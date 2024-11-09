@@ -6,7 +6,7 @@ function createTableSubject() {
         name VARCHAR(255),
         content MEDIUMTEXT,        
         subject_id INT,
-        FOREIGN KEY (subject_id) REFERENCES schollSubject(id)
+        FOREIGN KEY (subject_id) REFERENCES SchollSubject(id)
     )`;
 
 	db.query(sql, (err, result) => {

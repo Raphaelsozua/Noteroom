@@ -74,6 +74,18 @@ app.get('/getSubjects', verifyToken, async (req, res) => {
     }
 });
 
+app.get('/getNotebooks', verifyToken, async (req, res) => {
+    try {
+        const subjectId = req.query.subjectId;
+        const result = await ApiFacade.getNotebooks(subjectId);
+        res.status(200).json(result);
+    } catch (error) {
+        console.log(error);
+        
+        res.status(500).json(error);
+    }
+});
+
 // Inicia o servidor
 app.listen(3000, () => {
     console.log('Servidor rodando na porta 3000');

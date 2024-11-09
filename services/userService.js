@@ -18,7 +18,7 @@ class UserService {
                 resolve({
                     status: 'success',
                     detail: 'Usuário criado com sucesso',
-                    userId: result.insertId // Retorna o ID do novo usuário
+                    userId: result.insertId 
                 });
             });
         });
