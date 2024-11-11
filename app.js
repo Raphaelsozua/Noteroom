@@ -64,8 +64,10 @@ app.post('/notebooks', verifyToken, async (req, res) => {
 
 app.get('/getSubjects', verifyToken, async (req, res) => {
     try {
-        const userId = req.userId; // `user_id` do usuário logado
+        const userId = req.query.userId; // `user_id` do usuário logado
         const result = await ApiFacade.getSubjectsByUserId(userId);
+        console.log("foi", result);
+        
         res.status(200).json(result);
     } catch (error) {
         console.log(error);
